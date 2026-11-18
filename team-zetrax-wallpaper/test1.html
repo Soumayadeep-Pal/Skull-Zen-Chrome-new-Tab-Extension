@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    background-color: #1a1a1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  /* Main Wrapper */
+  .shopp-main-container {
+    display: flex;
+    align-items: center; 
+    padding: 20px;
+    cursor: pointer;
+    position: relative;
+    width: auto;
+    min-width: 300px;
+    min-height: 100px;
+    overflow: visible;
+  }
+
+  /* Truck Animation Parent */
+  .shopp-truck-loader {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Fast move across, slower fade out */
+    transition: transform 0.8s cubic-bezier(0.45, 0.05, 0.55, 0.95), opacity 0.3s 0.6s;
+    position: absolute;
+    left: 20px;
+    z-index: 10;
+  }
+
+  /* 1. TRUCK CROSSING ACTION */
+  .shopp-main-container.shop-active .shopp-truck-loader {
+    /* Drive past the text (approx 220px) */
+    transform: translateX(220px); 
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .shopp-truck-wrapper {
+    width: 60px;
+    height: 38px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .shopp-cargo-bag {
+    position: absolute;
+    top: 10px;
+    left: 15px; 
+    width: 14px;
+    height: 14px;
+    z-index: 2;
+    animation: shopp-bag-bounce 0.8s linear infinite;
+  }
+
+  @keyframes shopp-bag-bounce {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(2px); }
+  }
+
+  .shopp-truck-body {
+    width: 52px;
+    height: fit-content;
+    animation: shopp-body-motion 0.5s linear infinite;
+    position: relative;
+  }
+
+  @keyframes shopp-body-motion {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(1.5px); }
+  }
+
+  .shopp-wheel-unit {
+    width: 45px;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    bottom: -4px;
+    padding: 0 3px;
+  }
+
+  .shopp-wheel-svg { width: 11px; }
+
+  /* Button Styling */
+  .shopp-btn-cta {
+    margin-left: 70px; 
+    height: auto;
+    background: transparent;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    --shopp-stroke-color: rgba(255, 255, 255, 0.3); 
+    --shopp-accent-color: #37ff8b;
+    --shopp-font-size: 1.5em; 
+    letter-spacing: 2px;
+    font-size: var(--shopp-font-size);
+    font-family: "Arial Black", sans-serif;
+    position: relative;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--shopp-stroke-color);
+    /* Fade out slightly after the truck starts moving */
+    transition: opacity 0.4s 0.2s; 
+  }
+
+  /* Hide button when active */
+  .shopp-main-container.shop-active .shopp-btn-cta {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .shopp-btn-text-base { visibility: visible; }
+
+  .shopp-btn-text-hover {
+    position: absolute;
+    box-sizing: border-box;
+    content: attr(data-text);
+    color: var(--shopp-accent-color);
+    width: 0%;
+    inset: 0;
+    overflow: hidden;
+    transition: 0.8s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    -webkit-text-stroke: 1px var(--shopp-accent-color);
+  }
+
+  /* On hover (before click), just fill the text */
+  .shopp-main-container:hover .shopp-btn-text-hover {
+    width: 100%;
+  }
+
+  /* --- SOCIAL LINKS CONTAINER --- */
+  .shop-social-list {
+    display: flex;
+    position: absolute;
+    left: 20px; 
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .shop-link-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 0px; 
+    height: 40px;
+    opacity: 0;
+    overflow: hidden;
+    /* Delay the list appearance until the truck has crossed */
+    transition: width 0.4s 0.5s ease, opacity 0.3s 0.5s ease;
+    border-radius: 8px;
+    background: #333;
+  }
+
+  .shop-link-item img {
+    width: 25px;
+    height: 25px;
+  }
+
+  /* Show icons when active */
+  .shopp-main-container.shop-active .shop-social-list {
+      pointer-events: auto;
+  }
+
+  .shopp-main-container.shop-active .shop-link-item {
+      width: 40px;
+      opacity: 1;
+      margin-right: 10px;
+  }
+
+  .shop-link-item:hover {
+      transform: translateY(-5px);
+      background-color: var(--shopp-accent-color);
+      transition: transform 0.2s, background-color 0.2s; /* No delay on hover */
+  }
+</style>
+</head>
+<body>
+
+<div class="shopp-main-container" id="shopp-delivery-trigger">
+  <div class="shopp-truck-loader">
+    <div class="shopp-truck-wrapper">
+      <svg class="shopp-cargo-bag" viewBox="0 0 24 24" fill="#282828">
+        <path d="M19 7h-3c0-2.21-1.79-4-4-4S8 4.79 8 7H5c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm-7-2c1.1 0 2 .89 2 2h-4c0-1.11.89-2 2-2zm0 10c-2.21 0-4-1.79-4-4h2c0 1.1.9 2 2 2s2-.9 2-2h2c0 2.21-1.79 4-4 4z"/>
+      </svg>
+      <div class="shopp-truck-body">
+        <svg viewBox="0 0 198 93" class="shopp-truck-svg">
+          <path stroke-width="3" stroke="#282828" fill="#F83D3D" d="M135 22.5H177.264C178.295 22.5 179.22 23.133 179.594 24.0939L192.33 56.8443C192.442 57.1332 192.5 57.4404 192.5 57.7504V89C192.5 90.3807 191.381 91.5 190 91.5H135C133.619 91.5 132.5 90.3807 132.5 89V25C132.5 23.6193 133.619 22.5 135 22.5Z"></path>
+          <path stroke-width="3" stroke="#282828" fill="#7D7C7C" d="M146 33.5H181.741C182.779 33.5 183.709 34.1415 184.078 35.112L190.538 52.112C191.16 53.748 189.951 55.5 188.201 55.5H146C144.619 55.5 143.5 54.3807 143.5 53V36C143.5 34.6193 144.619 33.5 146 33.5Z"></path>
+          <rect stroke-width="3" stroke="#282828" fill="#DFDFDF" rx="2.5" height="90" width="121" y="1.5" x="6.5"></rect>
+        </svg>
+      </div>
+      <div class="shopp-wheel-unit">
+        <svg viewBox="0 0 30 30" class="shopp-wheel-svg"><circle stroke-width="3" stroke="#282828" fill="#282828" r="13.5" cy="15" cx="15"></circle><circle fill="#DFDFDF" r="7" cy="15" cx="15"></circle></svg>
+        <svg viewBox="0 0 30 30" class="shopp-wheel-svg"><circle stroke-width="3" stroke="#282828" fill="#282828" r="13.5" cy="15" cx="15"></circle><circle fill="#DFDFDF" r="7" cy="15" cx="15"></circle></svg>
+      </div>
+    </div>
+  </div>
+
+  <button class="shopp-btn-cta" data-text="SHOPPING" id="shoptoogle">
+    <span class="shopp-btn-text-base">&nbsp;SHOPPING&nbsp;</span>
+    <span aria-hidden="true" class="shopp-btn-text-hover">&nbsp;SHOPPING&nbsp;</span>
+  </button>
+
+  <div class="shop-social-list">
+    <a href="#" class="shop-link-item"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WA"></a>
+    <a href="#" class="shop-link-item"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="TG"></a>
+    <a href="#" class="shop-link-item"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111425.png" alt="GH"></a>
+    <a href="#" class="shop-link-item"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="LI"></a>
+  </div>
+</div>
+
+<script>
+  const tray = document.getElementById('shopp-delivery-trigger');
+  const btn = document.getElementById('shoptoogle');
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    tray.classList.add('shop-active');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!tray.contains(e.target)) {
+      tray.classList.remove('shop-active');
+    }
+  });
+</script>
+
+</body>
+</html>

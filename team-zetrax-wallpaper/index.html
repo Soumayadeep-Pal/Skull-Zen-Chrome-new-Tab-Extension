@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Tab</title>
+  <link rel="stylesheet" href="/style.css" />
+  <!-- <link rel="stylesheet" href="/font.css" /> -->
+  <link rel="shortcut icon" href="/img/128.png" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Orbitron:wght@400..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script src="/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Search Engine -->
+
+  <div class="search-tooltip-container" id="searchSelector">
+    <!-- Main button -->
+    <span class="search-main">
+      <img id="activeEngineIcon" src="https://www.google.com/favicon.ico" alt="Google" />
+    </span>
+
+    <!-- Engines -->
+    <span class="engine" data-angle="-120" data-url="https://www.google.com/search?q="
+      data-icon="https://www.google.com/favicon.ico">
+      <img src="https://www.google.com/favicon.ico">
+      <!-- Tooltip -->
+      <span class="engine-tooltip">
+        Google
+        <span class="tooltip-arrow"></span>
+      </span>
+    </span>
+
+    <span class="engine" data-angle="-80" data-url="https://www.startpage.com/search?q="
+      data-icon="https://www.startpage.com/favicon.ico">
+      <img src="https://www.startpage.com/favicon.ico">
+      <span class="engine-tooltip">
+        Startpage
+        <span class="tooltip-arrow"></span>
+      </span>
+    </span>
+
+    <span class="engine" data-angle="-40" data-url="https://search.brave.com/search?q="
+      data-icon="https://www.brave.com/favicon.ico">
+      <img src="https://www.brave.com/favicon.ico">
+      <span class="engine-tooltip">
+        Brave
+        <span class="tooltip-arrow"></span>
+      </span>
+    </span>
+
+    <span class="engine" data-angle="40" data-url="https://www.bing.com/search?q="
+      data-icon="https://www.bing.com/favicon.ico">
+      <img src="https://www.bing.com/favicon.ico">
+      <span class="engine-tooltip">
+        Bing
+        <span class="tooltip-arrow"></span>
+      </span>
+    </span>
+
+    <span class="engine" data-angle="0" data-url="https://duckduckgo.com/?q="
+      data-icon="https://duckduckgo.com/favicon.ico">
+      <img src="https://duckduckgo.com/favicon.ico">
+      <span class="engine-tooltip">
+        DuckDuckGo
+        <span class="tooltip-arrow"></span>
+      </span>
+    </span>
+  </div>
+
+  <!--  -->
+
+  <!-- Search Bar -->
+
+  <div id="searchBar">
+    <input type="text" id="searchInput" placeholder="Search" />
+    <span id="searchTrigger" class="material-symbols-outlined"> search </span>
+  </div>
+
+  <!--  -->
+
+  <div id="shortcutContainer"></div>
+  <!-- addShortcut addName  addUrl appendShortcut -->
+
+  <form id="addShortcut" class="shortcutForm">
+
+    <div class="input-group g1">
+      <div class="input-label">Name</div>
+      <input type="text" id="addName" maxlength="10" placeholder="Team Zetrax" class="webNameInput" required>
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="addUrl" placeholder="www.website.com" class="webUrlInput" required>
+      <button id="appendShortcut" class="shortcut-add-btn">
+        <span class="material-symbols-outlined">double_arrow</span>
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="btn-icon">
+        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+      </svg> -->
+      </button>
+    </div>
+
+  </form>
+
+
+
+
+  <div id="blurOverlay"></div>
+  <div id="globalTooltip"></div>
+  <svg id="spiralPathSvg">
+    <path id="spiralPath"></path>
+  </svg>
+
+  <svg width="0" height="0" style="position: absolute;">
+    <defs>
+      <clipPath id="flask-shape" clipPathUnits="objectBoundingBox">
+        <path
+          d="M0.35,0 L0.65,0 L0.65,0.38 L0.92,0.88 C0.98,0.95 0.95,1 0.85,1 L0.15,1 C0.05,1 0.02,0.95 0.08,0.88 L0.35,0.38 Z" />
+      </clipPath>
+    </defs>
+  </svg>
+
+  <div class="menubar" id="menubar">
+    <div class="flask-wrapper">
+      <button type="button" class="button" id="flask-btn" data-tooltip="Search Lab">
+        <div class="points_wrapper">
+
+          <i class="point"></i><i class="point"></i><i class="point"></i>
+
+          <i class="point"></i><i class="point"></i><i class="point"></i>
+
+          <i class="point"></i><i class="point"></i>
+
+        </div>
+        <span class="inner">
+          <svg class="icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <polyline points="13.18 1.37 13.18 9.64 21.45 9.64 10.82 22.63 10.82 14.36 2.55 14.36 13.18 1.37">
+            </polyline>
+          </svg>
+        </span>
+      </button>
+    </div>
+
+    <div id="googlelauncherBtn" data-tooltip="Google Apps">
+      <span class="google-btn-label">G</span>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="60" width="60">
+        <g id="a">
+          <g style="--c1: 120; --c2: 0; --delay: -0.5s">
+            <path id="b" d="M 0 12 a 12 12 0 0 1 24 0 a 12 12 0 0 0 -24 0"></path>
+            <path id="c" d="M 0 12 h 24 a 12 0  0 0 1 -24 0"></path>
+          </g>
+          <g style="--c1: 210; --c2: 60" transform="rotate(180 12 12)">
+            <path id="b" d="M 0 12 a 12 12 0 0 1 24 0 a 12 12 0 0 0 -24 0"></path>
+            <path id="c" d="M 0 12 h 24 a 12 0  0 0 1 -24 0"></path>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+
+    <div class="gen-ui-wrapper" id="gen-ui-wrapper">
+      <button class="gen-sparkle-btn" id="gen-trigger-btn" data-tooltip="Gen AI">
+        <div class="gen-dots_border"></div>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="sparkle">
+          <path class="path" stroke-linejoin="round" stroke-linecap="round"
+            d="M14.187 8.096L15 5.25L15.813 8.096C16.0231 8.83114 16.4171 9.50062 16.9577 10.0413C17.4984 10.5819 18.1679 10.9759 18.903 11.186L21.75 12L18.904 12.813C18.1689 13.0231 17.4994 13.4171 16.9587 13.9577C16.4181 14.4984 16.0241 15.1679 15.814 15.903L15 18.75L14.187 15.904C13.9769 15.1689 13.5829 14.4994 13.0423 13.9587C12.5016 13.4181 11.8321 13.0241 11.097 12.814L8.25 12L11.096 11.187C11.8311 10.9769 12.5006 10.5829 13.0413 10.0423C13.5819 9.50162 13.9759 8.83214 14.186 8.097L14.187 8.096Z">
+          </path>
+          <path class="path" stroke-linejoin="round" stroke-linecap="round"
+            d="M6 14.25L5.741 15.285C5.59267 15.8785 5.28579 16.4206 4.85319 16.8532C4.42059 17.2858 3.87853 17.5927 3.285 17.741L2.25 18L3.285 18.259C3.87853 18.4073 4.42059 18.7142 4.85319 19.1468C5.28579 19.5794 5.59267 20.1215 5.741 20.715L6 21.75L6.259 20.715C6.40725 20.1216 6.71398 19.5796 7.14639 19.147C7.5788 18.7144 8.12065 18.4075 8.714 18.259L9.75 18L8.714 17.741C8.12065 17.5925 7.5788 17.2856 7.14639 16.853C6.71398 16.4204 6.40725 15.8784 6.259 15.285L6 14.25Z">
+          </path>
+          <path class="path" stroke-linejoin="round" stroke-linecap="round"
+            d="M6.5 4L6.303 4.5915C6.24777 4.75718 6.15472 4.90774 6.03123 5.03123C5.90774 5.15472 5.75718 5.24777 5.5915 5.303L5 5.5L5.5915 5.697C5.75718 5.75223 5.90774 5.84528 6.03123 5.96877C6.15472 6.09226 6.24777 6.24282 6.303 6.4085L6.5 7L6.697 6.4085C6.75223 6.24282 6.84528 6.09226 6.96877 5.96877C7.09226 5.84528 7.24282 5.75223 7.4085 5.697L8 5.5L7.4085 5.303C7.24282 5.24777 7.09226 5.15472 6.96877 5.03123C6.84528 4.90774 6.75223 4.75718 6.697 4.5915L6.5 4Z">
+          </path>
+        </svg>
+      </button>
+
+      <div class="gen-menu-list" id="gen-menu-list">
+        <div class="gen-message-box">
+          <input id="gen-message-input" type="text" placeholder="Add link..." autocomplete="off">
+          <button id="gen-send-button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <button class="ai-hex-btn" id="ai-mainBtn" data-tooltip="AI Tool">
+      <div class="rotator">
+        <span class="dot t"></span>
+        <span class="dot tr"></span>
+        <span class="dot br"></span>
+        <span class="dot b"></span>
+        <span class="dot bl"></span>
+        <span class="dot tl"></span>
+        <div class="hex-shape"></div>
+      </div>
+
+      <div class="content-wrapper">
+        <span class="btn-text">AI</span>
+        <svg class="sparkle-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813A3.75 3.75 0 007.466 7.89l.813-2.846A.75.75 0 019 4.5zM18 1.5a.75.75 0 01.728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 010 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 01-1.456 0l-.258-1.036a2.625 2.625 0 00-1.91-1.91l-1.036-.258a.75.75 0 010-1.456l1.036-.258a2.625 2.625 0 001.91-1.91l.258-1.036A.75.75 0 0118 1.5zM16.5 15a.75.75 0 01.712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 010 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 01-1.422 0l-.395-1.183a1.5 1.5 0 00-.948-.948l-1.183-.395a.75.75 0 010-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0116.5 15z">
+          </path>
+        </svg>
+      </div>
+    </button>
+
+
+<button class="mini-camera-container" id="editbtn" data-tooltip="Edit Tool">
+  <div class="scale-wrapper">
+    <div class="camera-wrapper">
+      <input type="checkbox" id="snap" class="shutter-input" />
+      <div class="flash-overlay"></div>
+      <div class="camera-body">
+        <div class="rainbow-stripe"></div>
+        <div class="viewfinder"></div>
+        <div class="flash-unit"></div>
+        <div class="lens-housing">
+          <div class="lens-ring"></div>
+          <div class="lens-glass"><div class="aperture"></div></div>
+        </div>
+        <div class="label-plate">ONE-STEP</div>
+        <div class="shutter-btn">
+          <label for="snap" class="shutter-label"></label>
+        </div>
+        <div class="bottom-lip"></div>
+      </div>
+      <div class="film-slot">
+        <div class="film-image">
+          <div class="film-content"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</button>
+
+<button class="dev-button" id="devbutton" data-tooltip="Dev Tool">
+      <div class="sphere"></div>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <defs>
+          <mask id="waves" maskUnits="userSpaceOnUse">
+            <g fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5,50 C25,50 30,20 50,20 C70,20 75,50 95,50"></path>
+              <path d="M5,50 C25,50 30,20 50,20 C70,20 75,50 95,50"></path>
+              <path d="M5,50 C25,50 30,80 50,80 C70,80 75,50 95,50"></path>
+              <path d="M5,50 C25,50 30,80 50,80 C70,80 75,50 95,50"></path>
+            </g>
+          </mask>
+          <mask id="blurriness" maskUnits="userSpaceOnUse">
+            <g>
+              <circle cx="50" cy="50" r="50" fill="white"></circle>
+              <ellipse cx="50" cy="50" rx="25" ry="25" fill="black"></ellipse>
+            </g>
+          </mask>
+          <mask id="clipping" maskUnits="userSpaceOnUse">
+            <ellipse cx="50" cy="50" rx="25" ry="50" fill="white"></ellipse>
+          </mask> 
+          <mask id="fade" maskUnits="userSpaceOnUse">
+            <ellipse cx="50" cy="50" rx="45" ry="50" fill="white"></ellipse>
+          </mask>
+        </defs>
+        <g id="shapes" mask="url(#fade)">
+          <g mask="url(#clipping)">
+            <circle cx="50" cy="50" r="50" fill="currentColor" mask="url(#waves)"></circle>
+          </g>
+          <g mask="url(#blurriness)">
+            <circle cx="50" cy="50" r="50" fill="currentColor" mask="url(#waves)"></circle>
+          </g>
+        </g>
+      </svg>
+    </button>
+    <button class="elec-button" id="elecHudTrigger" data-tooltip="Electronics Tool">
+  <svg viewBox="0 0 64 64" fill="black" xmlns="http://www.w3.org/2000/svg" class="elec">
+    <g class="dash">
+      <path style="--sped: 4s;" pathLength="360" d="M 31.9463 1 C 15.6331 1 2.2692 13.6936 1 29.8237 L 17.644 36.7682 C 19.0539 35.794 20.7587 35.2264 22.5909 35.2264 C 22.7563 35.2264 22.9194 35.231 23.0803 35.2399 L 30.4828 24.412 L 30.4828 24.2601 C 30.4828 17.7446 35.7359 12.4423 42.1933 12.4423 C 48.6507 12.4423 53.9038 17.7446 53.9038 24.2601 C 53.9038 30.7756 48.6507 36.08 42.1933 36.08 C 42.104 36.08 42.0168 36.0778 41.9275 36.0755 L 31.3699 43.6747 C 31.3766 43.8155 31.3811 43.9562 31.3811 44.0947 C 31.3811 48.9881 27.4374 52.9675 22.5909 52.9675 C 18.3367 52.9675 14.7773 49.902 13.9729 45.8443 L 2.068 40.8772 C 5.7548 54.0311 17.7312 63.6748 31.9463 63.6748 C 49.0976 63.6748 63 49.6428 63 32.3374 C 63 15.0297 49.0976 1 31.9463 1 Z" class="big"></path>
+      <path pathLength="360" d="M 20.4603 48.5493 L 16.6461 46.9584 C 17.3209 48.3794 18.4917 49.5682 20.0447 50.2206 C 23.4007 51.6328 27.2707 50.0262 28.6694 46.6367 C 29.3464 44.9966 29.3509 43.1867 28.6806 41.5422 C 28.0103 39.8977 26.7434 38.6151 25.119 37.9315 C 23.5035 37.2544 21.7741 37.279 20.2547 37.8576 L 24.1961 39.5022 C 26.6719 40.5434 27.8427 43.4124 26.8104 45.9105 C 25.7803 48.4085 22.936 49.5905 20.4603 48.5493 Z" class="aaa"></path>
+      <path pathLength="360" d="M 49.9968 24.2603 C 49.9968 19.9188 46.4954 16.384 42.1943 16.384 C 37.8908 16.384 34.3894 19.9188 34.3894 24.2603 C 34.3894 28.6017 37.8908 32.1343 42.1943 32.1343 C 46.4954 32.1343 49.9968 28.6017 49.9968 24.2603 Z"></path>
+      <path pathLength="360" d="M 36.3446 24.2469 C 36.3446 20.9802 38.97 18.3324 42.2054 18.3324 C 45.4431 18.3324 48.0685 20.9802 48.0685 24.2469 C 48.0685 27.5135 45.4431 30.1613 42.2054 30.1613 C 38.97 30.1613 36.3446 27.5135 36.3446 24.2469 Z"></path>
+    </g>
+    <path pathLength="360" d="M 31.9463 1 C 15.6331 1 2.2692 13.6936 1 29.8237 L 17.644 36.7682 C 19.0539 35.794 20.7587 35.2264 22.5909 35.2264 C 22.7563 35.2264 22.9194 35.231 23.0803 35.2399 L 30.4828 24.412 L 30.4828 24.2601 C 30.4828 17.7446 35.7359 12.4423 42.1933 12.4423 C 48.6507 12.4423 53.9038 17.7446 53.9038 24.2601 C 53.9038 30.7756 48.6507 36.08 42.1933 36.08 C 42.104 36.08 42.0168 36.0778 41.9275 36.0755 L 31.3699 43.6747 C 31.3766 43.8155 31.3811 43.9562 31.3811 44.0947 C 31.3811 48.9881 27.4374 52.9675 22.5909 52.9675 C 18.3367 52.9675 14.7773 49.902 13.9729 45.8443 L 2.068 40.8772 C 5.7548 54.0311 17.7312 63.6748 31.9463 63.6748 C 49.0976 63.6748 63 49.6428 63 32.3374 C 63 15.0297 49.0976 1 31.9463 1 Z" fill="#212121"></path>
+    <path class="fill" pathLength="360" d="M 31.9463 1 C 15.6331 1 2.2692 13.6936 1 29.8237 L 17.644 36.7682 C 19.0539 35.794 20.7587 35.2264 22.5909 35.2264 C 22.7563 35.2264 22.9194 35.231 23.0803 35.2399 L 30.4828 24.412 L 30.4828 24.2601 C 30.4828 17.7446 35.7359 12.4423 42.1933 12.4423 C 48.6507 12.4423 53.9038 17.7446 53.9038 24.2601 C 53.9038 30.7756 48.6507 36.08 42.1933 36.08 C 42.104 36.08 42.0168 36.0778 41.9275 36.0755 L 31.3699 43.6747 C 31.3766 43.8155 31.3811 43.9562 31.3811 44.0947 C 31.3811 48.9881 27.4374 52.9675 22.5909 52.9675 C 18.3367 52.9675 14.7773 49.902 13.9729 45.8443 L 2.068 40.8772 C 5.7548 54.0311 17.7312 63.6748 31.9463 63.6748 C 49.0976 63.6748 63 49.6428 63 32.3374 C 63 15.0297 49.0976 1 31.9463 1 Z"></path>
+  </svg>
+</button>
+
+
+  </div>
+
+
+
+  <div id="gen-context-menu">
+    <div class="gen-ctx-item gen-ctx-delete" id="gen-ctx-delete">Remove</div>
+  </div>
+
+
+  <div id="ai-honeycomb-ui">
+    <div class="ai-node ai-center-add" id="ai-plusBtn">
+      <div class="ai-hex-inner"></div>+
+    </div>
+  </div>
+
+  <div id="ai-ctx">Remove</div>
+
+  <div class="ai-modal" id="ai-modal">
+    <div class="ai-box" id="ai-box">
+      <h3 style="color: #002a4d;">🔗</h3>
+
+      <input type="text" id="ai-urlInput" class="ai-input" placeholder="Add AI url">
+
+      <button id="ai-saveBtn" class="ai-save-btn material-symbols-outlined">double_arrow</button>
+    </div>
+  </div>
+
+
+
+
+    <div class="editAppContainer" id="editAppContainer">
+        <div id="editGridBody"></div>
+       
+    </div>
+
+    <div id="editappremove">
+        <div class="editMenuItem" id="editRemoveItem">Remove</div>
+    </div>
+
+    <div class="editModalOverlay" id="editModalOverlay">
+        <div class="editModal">
+            <input type="text" id="editAppUrl" placeholder="Add url" autocomplete="off">
+            <button id="editInstallBtn" class="material-symbols-outlined">double_arrow</button>
+            <!-- <button id="editCancelModalBtn" style="background:transparent; color:#444; margin-top:10px;">CANCEL</button> -->
+        </div>
+    </div>
+
+
+
+
+    <div id="dev-app-wrapper">
+    <div id="dev-canvas"></div>
+</div>
+
+<div id="dev-context-menu">
+    <div class="dev-menu-item" id="dev-menu-remove">Remove</div>
+</div>
+
+<div id="dev-modal-overlay">
+    <div class="dev-modal" id="dev-modal-container">
+        <!-- <h3 id="dev-modal-title">Add New App</h3> -->
+        <input type="text" id="dev-url-input" placeholder="Add url">
+        <button class="dev-btn-confirm material-symbols-outlined" id="dev-btn-add">double_arrow</button>
+    </div>
+</div>
+ 
+<div id="elecHudWrapper">
+        <div id="elecContainer">
+            <svg id="elecConnections"></svg>
+            <div id="elecAddBtn">+</div>
+        </div>
+    </div>
+
+    <div id="elecRemoveMenu">Remove</div>
+
+    <div id="elecModalOverlay">
+        <div class="elecInputContainer">
+            <input type="text" id="elecHoloInput" class="elecHoloInput" placeholder=" " autocomplete="off" />
+            <label class="elecInputLabel">Add url</label>
+            <div class="elecCorner elecCornerTl"></div>
+            <div class="elecCorner elecCornerTr"></div>
+            <div class="elecCorner elecCornerBl"></div>
+            <div class="elecCorner elecCornerBr"></div>
+           
+        </div>
+         <button id="elecAddConfirmBtn" class="material-symbols-outlined">double_arrow</button>
+    </div>
+
+  <div id="clock">
+    <div id="time"></div>
+    <div id="today"></div>
+  </div>
+
+  <!-- <div id="links">
+			
+
+            <a href="#" target="_blank" title="Privacy Policy">
+                Privacy Policy
+            </a>
+            <a href="#" target="_blank" title="more extensions">
+                More Extensions
+            </a>
+        </div> -->
+
+
+    <div class="bottom-nav" id="navContainer">
+        <button id="btn-social" class="bottom-btn" data-tooltip="Social">📱</button>
+        <button id="btn-shop" class="bottom-btn" data-tooltip="Shop">🛒</button>
+        <button id="btn-games" class="bottom-btn" data-tooltip="Games">🎮</button>
+
+        <div id="socialTray" class="tray">
+           <!-- <button class="back-btn close-trigger">✕</button> -->
+            <a href="https://twitter.com" target="_blank">🐦</a>
+            <a href="https://instagram.com" target="_blank">📸</a>
+            <a href="https://web.whatsapp.com" target="_blank">💬</a>
+        </div>
+
+        <div id="shopTray" class="tray">
+           <!-- <button class="back-btn close-trigger">✕</button> -->
+            <a href="https://amazon.com" target="_blank">📦</a>
+            <a href="https://ebay.com" target="_blank">🏷️</a>
+            <a href="https://aliexpress.com" target="_blank">🛍️</a>
+        </div>
+
+        <div id="gamesTray" class="tray">
+           <!-- <button class="back-btn close-trigger">✕</button> -->
+            <a href="https://twitch.tv" target="_blank">👾</a>
+            <a href="https://discord.com" target="_blank">🎧</a>
+            <a href="https://steampowered.com" target="_blank">🕹️</a>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+  <script src="/script.js"></script>
+</body>
+
+</html>

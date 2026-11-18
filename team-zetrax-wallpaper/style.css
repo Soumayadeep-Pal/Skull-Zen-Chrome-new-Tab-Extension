@@ -1,0 +1,2694 @@
+*,
+*::before,
+*::after,
+*:focus {
+    border: none;
+    box-sizing: border-box;
+    color: inherit;
+    /* font-family: "Audiowide", sans-serif; */
+    margin: 0;
+    padding: 0;
+    outline: none;
+    text-decoration: none;
+}
+
+:root {
+    --1st-color: rgb(202, 9, 255);
+    --2nd-color: #fffb0b;
+    --3rd-color: rgb(153, 255, 0);
+    --flask-color: #7a5af8;
+    --glow-color: rgba(223, 113, 255, 0.8);
+    --h-button: 85px;
+    --w-button: 80px;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+body {
+    --scale: 0.73437;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+#bgVdo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    color: white;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0,
+        "opsz" 15px;
+}
+
+#vdoContainer {
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: 1;
+}
+
+#bgVdo {
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    object-fit: cover;
+}
+
+#overlay {
+    background: linear-gradient(to top, #0009, #fff0 20%);
+    content: "a";
+    height: 100vh;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    z-index: 10;
+}
+
+.search-tooltip-container.open .engine {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+}
+
+.search-tooltip-container {
+    position: absolute;
+    top: 8.5vh;
+    left: 40vw;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    z-index: 101;
+
+}
+
+.engine {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #28282a;
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(0, 0) scale(0);
+    transition: 0.35s ease;
+    z-index: 102;
+}
+
+.engine img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+
+.search-main img {
+    width: 20px;
+    height: 20px;
+    opacity: 0.5;
+    filter: blur(1px);
+}
+
+.search-main img:hover,
+.search-main img:focus-within {
+    opacity: 1;
+    filter: blur(0);
+}
+
+.engine-tooltip {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translate(-50%, -50%);
+    background: #28282a;
+    ;
+    font-size: 12px;
+    font-family: "Audiowide", sans-serif;
+    padding: 5px;
+    border-radius: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    text-align: center;
+    border: 2px solid var(--1st-color);
+    color: var(--2nd-color);
+}
+
+/* show tooltip on hover */
+.engine:hover .engine-tooltip {
+    opacity: 1;
+    transform: translate(12px, -50%);
+}
+
+/* tooltip arrow */
+.tooltip-arrow {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    background: inherit;
+    border-left: 2px solid var(--1st-color);
+    border-bottom: 2px solid var(--1st-color);
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+
+#searchBar {
+    align-items: center;
+    display: flex;
+    border-radius: 70px;
+    color: #000;
+    height: 40px;
+    justify-content: center;
+    margin-inline: auto;
+    outline: none;
+    overflow: Hidden;
+    width: 470px;
+    font-size: 15px;
+    /* <-- allow child to overflow */
+    position: absolute;
+    top: 5vh;
+    left: 52vw;
+    transform: translateX(-50%);
+    /* max-width: 90vw; */
+    z-index: 100;
+    opacity: 0.5;
+    filter: blur(1px);
+    transition: all 0.4s ease;
+}
+
+
+#searchBar:hover,
+#searchBar:focus-within {
+    opacity: 1;
+    filter: blur(0);
+}
+
+#searchBar span {
+    padding: 7px;
+    align-items: center;
+    aspect-ratio: 1;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    height: 40px;
+}
+
+
+#searchBar span {
+    color: var(--3rd-color);
+}
+
+#searchBar span:hover {
+    color: var(--3rd-color);
+    transform: scale(1.3);
+}
+
+#searchInput {
+    background: transparent;
+    background: linear-gradient(90deg, var(--1st-color), var(--2nd-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    ;
+    font-size: 18px;
+    font-family: "Orbitron", sans-serif;
+    font-weight: 900;
+    height: 40px;
+    outline: none;
+    padding: 6px 18px;
+    padding-left: 0;
+    width: calc(calc(100% - 112px) * 0.734375);
+    max-width: calc(100% - 112px);
+    caret-color: var(--3rd-color);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    font-size: 15px;
+}
+
+#searchInput:hover,
+#searchInput:focus {
+    border-bottom-color: var(--3rd-color);
+}
+
+
+
+
+
+
+
+
+/* --- CONTAINER FIX --- */
+#shortcutContainer {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(auto-fill, 50px);
+    /* Unified row height */
+    grid-auto-columns: 50px;
+    /* Unified column width */
+    /* gap: 5px; */
+    max-height: 95vh;
+    position: absolute;
+    top: 3vh;
+    left: 1.5vw;
+    z-index: 100;
+}
+
+/* --- ITEM BASE --- */
+.shortcut-item {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    /* background-color: red; */
+}
+
+.shortcut-item:hover {
+    transform: scale(1.1);
+}
+
+/* --- ICON STYLING --- */
+.shortcutLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.shortcutLink img {
+    height: 30px;
+    width: 30px;
+    padding: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(200, 0, 255, 0.6);
+    border-radius: 12px 0 12px 0;
+    /* Smoother corner */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    object-fit: contain;
+}
+
+/* --- DELETE BUTTON --- */
+.removeLink {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    z-index: 10;
+    background: #222;
+    height: 20px;
+    width: 20px;
+    display: none;
+    /* Shown via JS or CSS hover */
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    border: 1px solid #444;
+}
+
+.shortcut-item:hover .removeLink {
+    display: flex;
+}
+
+.removeLink:hover {
+    background: #ff1500;
+}
+
+.removeLink span {
+    font-size: 14px !important;
+}
+
+/* --- PLUS BUTTON --- */
+
+.plusButton {
+    --plus_sideLength: 2.5rem;
+    --plus_topRightTriangleSideLength: 0.9rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid white;
+    height: 30px;
+    width: 30px;
+    background-color: #000000;
+    overflow: hidden;
+    /* margin-top: 0.5cm; */
+    border-radius: 12px 0 12px 0;
+}
+
+.plusButton::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-width: 0 var(--plus_topRightTriangleSideLength) var(--plus_topRightTriangleSideLength) 0;
+    border-style: solid;
+    border-color: transparent white transparent transparent;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.2s;
+}
+
+.plusButton:hover {
+    cursor: pointer;
+}
+
+.plusButton:hover::before {
+    --plus_topRightTriangleSideLength: calc(var(--plus_sideLength) * 2);
+}
+
+.plusButton:focus-visible::before {
+    --plus_topRightTriangleSideLength: calc(var(--plus_sideLength) * 2);
+}
+
+.plusButton>.plusIcon {
+    fill: white;
+    width: calc(var(--plus_sideLength) * 0.7);
+    height: calc(var(--plus_sideLength) * 0.7);
+    z-index: 1;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.2s;
+}
+
+.plusButton:hover>.plusIcon {
+    fill: black;
+    transform: rotate(180deg);
+}
+
+.plusButton:focus-visible>.plusIcon {
+    fill: black;
+    transform: rotate(180deg);
+}
+
+
+.shortcutForm {
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+    padding: 12px;
+    background-color: #09090b;
+    border: 2px solid var(--1st-color);
+    border-radius: 15px 0 15px 0;
+    width: 300px;
+}
+
+/* --- THE SHARED "SPLIT" GROUP --- */
+.input-group {
+    display: flex;
+    height: 40px;
+    width: 100%;
+    font-size: 14px;
+}
+
+.g1 {
+    margin-bottom: 12px;
+}
+
+/* Common Input Styling */
+.webNameInput,
+.webUrlInput {
+    flex: 1;
+    background-color: #09090b;
+    border: 2px solid var(--2nd-color);
+    color: var(--3rd-color);
+    padding: 0 12px;
+    outline: none;
+    transition: all 0.15s ease-in-out;
+    font-family: "Orbitron", sans-serif;
+    font-size: 12px;
+}
+
+/* Left Label (Name Row) */
+.input-label {
+    display: flex;
+    align-items: center;
+    background-color: #1c1c1f;
+    color: var(--3rd-color);
+    padding: 0 12px;
+    border: 2px solid var(--3rd-color);
+    border-right: none;
+    border-radius: 12px 0 0 0;
+    user-select: none;
+    font-size: 13px;
+    font-family: "audiowide", sans-serif;
+}
+
+
+
+/* Focus State */
+.webNameInput:focus,
+.webUrlInput:focus {
+    border-color: var(--3rd-color);
+    background-color: #121214;
+}
+
+.input-group:has(.webNameInput:not(:placeholder-shown)) .webNameInput {
+    border-color: var(--3rd-color);
+}
+
+.input-group:has(.webNameInput:not(:placeholder-shown)) .webUrlInput {
+    border-color: var(--3rd-color);
+}
+
+/* --- THE BUTTON (Part of the URL Split) --- */
+.shortcut-add-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #28282a;
+    color: var(--3rd-color);
+    padding: 0 10px;
+    border: 2px solid var(--3rd-color);
+    border-radius: 0 0 8px 0;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.2s;
+}
+
+.shortcut-add-btn:hover {
+    background-color: var(--3rd-color);
+    color: #000000;
+
+}
+
+
+.btn-icon {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+    opacity: 0.7;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#clock {
+    align-items: center;
+    top: 18px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 18px;
+    z-index: 9999;
+    white-space: nowrap;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* media aspect ration less than 1/1 */
+@media (max-aspect-ratio: 1/1) {
+    #clock {
+        align-items: center;
+        justify-content: center;
+        bottom: unset;
+        top: 10vh;
+        right: unset;
+        left: 50vw;
+        transform: translateX(-50%);
+    }
+}
+
+#time {
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 40px;
+    font-family: "Orbitron", sans-serif;
+}
+
+#today {
+    font-size: 18px;
+    font-weight: 400;
+    font-family: "Audiowide", sans-serif;
+    color: var(--3rd-color);
+}
+
+#links {
+    bottom: 18px;
+    color: #fff;
+    display: flex;
+    font-size: 12px;
+    gap: 18px;
+    left: 18px;
+    position: absolute;
+    transform-origin: bottom left;
+    z-index: 9999;
+}
+
+#links a span {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    padding: 6px;
+    transition: background 0.3s ease-in-out;
+}
+
+#links a:hover span {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+#links a {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    gap: 3px;
+    justify-content: center;
+    position: relative;
+}
+
+#links a::after {
+    background: #fff;
+    bottom: 0;
+    content: "";
+    height: 1.5px;
+    right: 0;
+    position: absolute;
+    width: 0;
+    transition: width 0.3s ease-in-out;
+}
+ 
+.active {
+    /* background: #0072ff; */
+    border-radius: 1000px;
+    box-shadow: 0 0 16px -4px #000;
+    color: #fff;
+    scale: 0.8;
+}
+
+#alert {
+    align-items: center;
+    background: #fff;
+    border-radius: 15px;
+    color: #111;
+    display: flex;
+    flex-direction: column;
+    font-size: 24px;
+    font-weight: 500;
+    gap: 24px;
+    height: calc(100% - 58.75px);
+    justify-content: center;
+    margin: 30px;
+    position: absolute;
+    padding: 15px;
+    text-align: center;
+    width: calc(100% - 58.75px);
+    z-index: 999999;
+}
+
+#alert img {
+    height: 15px;
+    width: 15px;
+}
+
+#alertLoader {
+    align-items: center;
+    border-radius: 50%;
+    border: 3px solid #0072ff;
+    border-top: 3px solid #fff;
+    display: flex;
+    justify-content: center;
+    height: 70px;
+    width: 70px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        border: 3px solid #0072ff;
+        border-top: 3px solid #fff;
+    }
+
+    25% {
+        border: 3px solid #0072ff;
+        border-right: 3px solid #fff;
+    }
+
+    50% {
+        border: 3px solid #0072ff;
+        border-bottom: 3px solid #fff;
+    }
+
+    75% {
+        border: 3px solid #0072ff;
+        border-left: 3px solid #fff;
+    }
+
+    100% {
+        border: 3px solid #0072ff;
+        border-top: 3px solid #fff;
+    }
+}
+
+
+
+/* --- CENTERED MENUBAR --- */
+.menubar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    position: absolute;
+    top: 12vh;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 40px;
+    padding: 0 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    z-index: 100;
+    transition: opacity 0.3s ease;
+    /* Smooth hide/show */
+    overflow: visible;
+}
+
+
+/* --- GLOBAL BLUR --- */
+/* --- GLOBAL BLUR --- */
+#blurOverlay {
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(0px);
+    background: rgba(0, 0, 0, 0);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    z-index: 5;
+    /* Sit below menubar (100) but above everything else */
+    pointer-events: none;
+}
+
+#blurOverlay.active {
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Ensure the wrapper stays above the blur */
+
+/* --- FLASK BUTTON --- */
+.button {
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    width: 32px;
+    height: 32px;
+    transition: transform 0.2s ease;
+    z-index: 100;
+}
+
+.button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    clip-path: url(#flask-shape);
+    background: linear-gradient(0deg, yellow, crimson);
+}
+
+.icon {
+    width: 12px;
+    height: 12px;
+    stroke: white;
+    fill: none;
+}
+
+/* .point {
+position: absolute;
+bottom: 8px;
+width: 4px;
+height: 4px;
+background: rgba(255,255,255,0.8);
+border-radius: 50%;
+animation: floating-points 2s infinite ease-in;
+opacity: 0;
+}
+@keyframes floating-points {
+0% { transform: translateY(0) scale(1); opacity: 0; }
+50% { opacity: 1; }
+100% { transform: translateY(-60px) scale(1.5); opacity: 0; }
+} */
+
+
+.point {
+
+    bottom: 15px;
+    position: absolute;
+
+    animation: floating-points 3.5s infinite ease-in;
+
+    width: 10px;
+
+    height: 10px;
+
+    background-color: rgba(255, 255, 255, 0.7);
+
+    border-radius: 50%;
+
+    filter: blur(0.3px);
+
+}
+
+
+
+@keyframes floating-points {
+
+    0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: translateY(-130px) scale(1.8);
+        opacity: 0;
+    }
+
+}
+
+
+
+/* Center bubbles to pass through the neck */
+
+.point:nth-child(1) {
+    left: 48%;
+    animation-delay: -0.2s;
+}
+
+.point:nth-child(2) {
+    left: 52%;
+    animation-delay: -0.9s;
+}
+
+.point:nth-child(3) {
+    left: 45%;
+    animation-delay: -1.7s;
+}
+
+.point:nth-child(4) {
+    left: 55%;
+    animation-delay: -2.4s;
+}
+
+.point:nth-child(5) {
+    left: 50%;
+    animation-delay: -3.1s;
+}
+
+.point:nth-child(6) {
+    left: 47%;
+    animation-delay: -0.5s;
+}
+
+.point:nth-child(7) {
+    left: 53%;
+    animation-delay: -1.3s;
+}
+
+.point:nth-child(8) {
+    left: 49%;
+    animation-delay: -2.1s;
+}
+
+
+/* --- GOOGLE LAUNCHER --- */
+#googlelauncherBtn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    z-index: 100;
+
+}
+
+.google-btn-label {
+    position: absolute;
+    font-family: "orbitron", sans-serif;
+    color: white;
+    font-size: 18px;
+    font-weight: 900;
+    pointer-events: none;
+}
+
+/* === SVG ANIMATION STYLES === */
+#a {
+    transform-origin: center;
+    animation: a 2s step-end infinite;
+}
+
+@keyframes a {
+    0% {
+        transform: rotate(90deg);
+    }
+
+    25% {
+        transform: rotate(180deg);
+    }
+
+    50% {
+        transform: rotate(270deg);
+    }
+
+    75% {
+        transform: rotate(360deg);
+    }
+}
+
+#b {
+    animation: b1 1s linear infinite, b2 2s step-end infinite;
+    animation-delay: var(--delay, 0s);
+}
+
+@keyframes b1 {
+
+    0%,
+    100% {
+        d: path("M 0 12 a 12 12 0 0 1 24 0 a 12 12 0 0 0 -24 0");
+    }
+
+    25%,
+    75% {
+        d: path("M 0 12 a 12 12 0 0 1 24 0 a 12 0 0 0 0 -24 0");
+    }
+}
+
+@keyframes b2 {
+    0% {
+        fill: hsl(var(--c1), 100%, 43%);
+    }
+
+    50% {
+        fill: hsl(var(--c2), 100%, 43%);
+    }
+}
+
+#c {
+    animation: c1 1s linear infinite, c2 2s linear infinite;
+    animation-delay: var(--delay, 0s);
+}
+
+@keyframes c1 {
+
+    0%,
+    25%,
+    75%,
+    100% {
+        d: path("M 0 12 h 24 a 12 0  0 0 1 -24 0");
+    }
+
+    50% {
+        d: path("M 0 12 h 24 a 12 12 0 0 1 -24 0");
+    }
+}
+
+@keyframes c2 {
+
+    0%,
+    25% {
+        fill: hsl(var(--c1), 100%, 43%);
+    }
+
+    12.5%,
+    37.5% {
+        fill: hsl(var(--c1), 100%, 25%);
+    }
+
+    50%,
+    75% {
+        fill: hsl(var(--c2), 100%, 43%);
+    }
+
+    62.5%,
+    87.5% {
+        fill: hsl(var(--c2), 100%, 25%);
+    }
+}
+
+/* --- UNIVERSAL TOOLTIP --- */
+/* 1. Remove/Delete the #shortcutContainer ::after logic entirely to stop the clash */
+
+/* 2. Apply the preferred style to the Global Tooltip */
+#globalTooltip {
+    position: fixed;
+    background: #28282a;
+    /* Your preferred translucent background */
+    color: var(--2nd-color);
+    /* Your preferred color variable */
+    padding: 4px 10px;
+    border-radius: 10px;
+    /* Your preferred rounded corners */
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 99999;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    font-family: "Audiowide", sans-serif;
+
+    /* Smooth transition that mimics the first style's hover effect */
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    transform: translate(-50%, -80%);
+    /* Initial state slightly lower */
+    backdrop-filter: blur(4px);
+    /* Optional: adds to the 'ae' translucent look */
+}
+
+/* State when active (triggered via JS) */
+#globalTooltip.visible {
+    opacity: 1;
+    transform: translate(-50%, -20%);
+    /* Slides up into place */
+}
+
+/* --- SPIRAL AND APPS --- */
+#spiralPathSvg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9;
+    width: 100%;
+    height: 100%;
+}
+
+#spiralPath {
+    stroke: var(--3rd-color);
+    stroke-width: 3;
+    fill: none;
+    stroke-dasharray: 8 8;
+    filter: drop-shadow(0 0 5px var(--3rd-color));
+}
+
+.app {
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    border-radius: 10px;
+    transform: scale(0);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    z-index: 10;
+    background: #28282a;
+    justify-content: center;
+    align-items: center;
+    /* border: 2px solid var(--1st-color); */
+
+}
+
+.app-image {
+    /* object-fit: cover; */
+    border-radius: 10px;
+    height: 40px;
+    width: 40px;
+    padding: 5px;
+
+}
+
+
+
+
+
+
+.gen-ui-wrapper {
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+/* --- TRIGGER BUTTON --- */
+.gen-sparkle-btn {
+    grid-area: 1 / 1;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 10;
+}
+
+.gen-sparkle-btn::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    background-color: #1f1f1f;
+    border-radius: 50%;
+    box-shadow: inset 0 0.5px hsl(0, 0%, 100%), inset 0 -1px 2px 0 hsl(0, 0%, 0%);
+    transition: all 0.3s ease-in-out;
+    z-index: 0;
+}
+
+.gen-sparkle-btn::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32px;
+    height: 32px;
+    background-color: hsla(260, 97%, 61%, 0.75);
+    background-image: radial-gradient(at 51% 89%, hsla(266, 45%, 74%, 1) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, hsla(266, 36%, 60%, 1) 0px, transparent 50%),
+        radial-gradient(at 22% 91%, hsla(266, 36%, 60%, 1) 0px, transparent 50%);
+    opacity: 0;
+    border-radius: 50%;
+    transition: opacity 0.3s ease-in-out;
+    z-index: 2;
+}
+
+.gen-sparkle-btn:hover {
+    transform: scale(1.1);
+}
+
+.gen-sparkle-btn:hover::after {
+    opacity: 1;
+}
+
+.gen-sparkle-btn:hover::before {
+    box-shadow: inset 0 0.5px hsl(0, 0%, 100%),
+        inset 0 -1px 2px 0 hsl(0, 0%, 0%),
+        0 0 0 0.375rem hsl(260, 97%, 50%, 0.75);
+}
+
+.gen-sparkle-btn .gen-dots_border {
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    border-radius: 100%;
+    z-index: -10;
+}
+
+.gen-sparkle-btn .gen-dots_border::before {
+    content: "";
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform-origin: left;
+    width: 100%;
+    height: 2rem;
+    background-color: white;
+    mask: linear-gradient(transparent 0%, white 120%);
+    -webkit-mask: linear-gradient(transparent 0%, white 120%);
+    animation: rotate 2s linear infinite;
+}
+
+.gen-sparkle-btn .sparkle {
+    position: relative;
+    z-index: 10;
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+.gen-sparkle-btn .sparkle .path {
+    fill: white;
+    stroke: white;
+    transform-origin: center;
+}
+
+.gen-sparkle-btn:hover .sparkle .path {
+    animation: path 1.5s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes path {
+
+    0%,
+    34%,
+    71%,
+    100% {
+        transform: scale(1);
+    }
+
+    17%,
+    49%,
+    83% {
+        transform: scale(1.2);
+    }
+}
+
+
+
+/* --- MENU LIST --- */
+.gen-menu-list {
+    grid-area: 1 / 1;
+    display: flex;
+    flex-flow: column wrap;
+
+    gap: 12px;
+    max-height: 65vh;
+    /* Prevents going off screen */
+    /* padding: 20px; */
+    opacity: 0;
+    /* transform: scale(0.8); */
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1000;
+    position: absolute;
+    top: 150%;
+    left: -950%;
+}
+
+
+.gen-ui-wrapper.gen-active .gen-menu-list {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+.gen-ui-wrapper.gen-active .gen-sparkle-btn {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* --- LINK ITEMS --- */
+.gen-outer-cont {
+    position: relative;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 5px;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 12px;
+    white-space: nowrap;
+    background: transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    font-family: "orbitron", sans-serif;
+}
+
+.gen-outer-cont::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, #5bfcc4, #f593e4, #71a4f0);
+    box-shadow: inset 0px 35px 30px #000;
+    filter: var(--gen-hue, hue-rotate(0deg));
+    z-index: -1;
+    border-radius: 12px;
+}
+
+/* --- HOVER GLOW EFFECT --- */
+.gen-outer-cont:hover {
+    transform: translateY(-3px) scale(1.02);
+    border: 1px solid var(--1st-color);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(91, 252, 196, 0.2);
+}
+
+/* --- INPUT BOX --- */
+.gen-message-box {
+    display: flex;
+    align-items: center;
+    background-color: #1e1e1e92;
+    padding: 5px 15px;
+    border-radius: 10px;
+    border: 2px solid var(--1st-color);
+}
+
+#gen-message-input {
+    width: 80px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--3rd-color);
+    height: 30px;
+    font-family: "audiowide", sans-serif;
+}
+
+#gen-send-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #6c6c6c;
+}
+
+#gen-send-button:hover {
+    color: #5bfcc4;
+}
+
+/* --- CONTEXT MENU --- */
+#gen-context-menu {
+    position: fixed;
+    background: #222;
+    border: 1px solid #444;
+    border-radius: 8px;
+    display: none;
+    flex-direction: column;
+    padding: 5px;
+    z-index: 2000;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.gen-ctx-item {
+    /* padding: 8px;  */
+    color: white;
+    cursor: pointer;
+    font-size: 0.7rem;
+    border-radius: 4px;
+    font-family: "audiowide", sans-serif;
+}
+
+.gen-ctx-item:hover {
+    background: #333;
+}
+
+.gen-ctx-delete {
+    color: #ff5f5f;
+}
+
+/* --- CORE MENUBAR --- */
+
+/* --- GEN AI POSITIONING FIX --- */
+
+
+
+
+/* Show menu logic */
+.gen-ui-wrapper.gen-active .gen-menu-list {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+    pointer-events: auto;
+}
+
+/* Hide button when active (optional) */
+.gen-ui-wrapper.gen-active .gen-sparkle-btn {
+    opacity: 0.2;
+}
+
+/* --- MAIN HEX BUTTON --- */
+.ai-hex-btn {
+    position: relative;
+    width: 30px;
+    height: 34.64px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+/* The container that spins infinitely */
+.rotator {
+    position: absolute;
+    inset: 0;
+    /* Normal case: slow 10s rotation */
+    animation: slowSpin 10s linear infinite;
+    transition: all 0.5s ease;
+}
+
+/* Hover case: transition to a faster spin or reset */
+.ai-hex-btn:hover .rotator {
+    animation: fastSpin 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slowSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fastSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Hexagon Shape (Border and Fill) */
+.hex-shape {
+    position: absolute;
+    inset: 0;
+}
+
+.hex-shape::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgb(0, 0, 0);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%,
+            50% 0%,
+            50% 6%, 7% 28%, 7% 72%, 50% 94%, 93% 72%, 93% 28%, 50% 6%);
+}
+
+.hex-shape::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* background: linear-gradient(to right, red, #00eeff); */
+    background: rgba(0, 0, 0, 0.733);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.ai-hex-btn:hover .hex-shape::after {
+    opacity: 1;
+}
+
+/* Dots */
+.dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #000000;
+    border: 2px solid #00eeff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.t {
+    top: 0;
+    left: 50%;
+}
+
+.b {
+    top: 100%;
+    left: 50%;
+}
+
+.tl {
+    top: 25%;
+    left: 0;
+}
+
+.bl {
+    top: 75%;
+    left: 0;
+}
+
+.tr {
+    top: 25%;
+    left: 100%;
+}
+
+.br {
+    top: 75%;
+    left: 100%;
+}
+
+/* Static Content */
+.content-wrapper {
+    position: relative;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.btn-text {
+    font-family: "audiowide";
+    font-size: 18px;
+    font-weight: 900;
+    color: white;
+    transition: opacity 0.2s;
+}
+
+.sparkle-icon {
+    width: 16px;
+    height: 16px;
+    color: #00eeff;
+    position: absolute;
+    opacity: 0;
+    transition: all 0.2s;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ai-hex-btn:hover .btn-text {
+    opacity: 0;
+}
+
+.ai-hex-btn:hover .sparkle-icon {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+
+
+/* --- HONEYCOMB UI --- */
+#ai-honeycomb-ui {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+#ai-honeycomb-ui.isvisible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+}
+
+.ai-node {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 30px;
+    height: 34.641px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+
+}
+
+.ai-hex-inner {
+    position: absolute;
+    inset: 0;
+    background: var(--1st-color);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%, 50% 0%, 50% 6%, 7% 28%, 7% 72%, 50% 94%, 93% 72%, 93% 28%, 50% 6%);
+}
+
+.ai-center-add {
+    background: #0f0e0e;
+    z-index: 20;
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--3rd-color);
+    transform: translate(-50%, -50%);
+}
+
+.ai-site-node {
+    background: #00caeee3;
+    z-index: 15;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.2s;
+    --node-scale: 1;
+}
+
+
+.ai-site-node:hover {
+    --node-scale: 1.1;
+    z-index: 50;
+    /* Ensures the scaled node sits on top of neighbors */
+    filter: brightness(1.2);
+}
+
+.ai-site-node img {
+    width: 92%;
+    height: 87%;
+    pointer-events: none;
+    inset: 0;
+    margin: 15px;
+    background: #28282a;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    padding: 3px;
+
+}
+
+/* --- MODAL --- */
+.ai-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    /* left: 50%; */
+}
+
+.ai-box {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    width: auto;
+    height: 35px;
+
+    /* Sci-Fi Border Color (Deep Blue) and Glow (Cyan) 
+filter: drop-shadow(0px 0px 2px #0a2e52) drop-shadow(0px 0px 10px rgba(0, 255, 242, 0.3));
+/* The gap creates the vertical divider lines between the 3 parts */
+    gap: 2px;
+    /* margin-left: 10%; */
+    transform: translateX(10px);
+    transition: transform 0.9s ease;
+    /* filter:  */
+    /* drop-shadow(0px 0px 2px #00f2ff)  */
+    /* drop-shadow(0px 0px 8px rgba(0, 242, 255, 0.5)); */
+
+}
+
+/* Common Styles for all 3 segments */
+.ai-box>* {
+
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* padding: 0 20px; */
+
+
+
+}
+
+/* 2. LEFT PART (The Header/Icon Area)
+- Uses clip-path to create the arrow pointing LEFT.
+- "30px" controls how wide the arrow point is.
+*/
+.ai-box h3 {
+    margin: 0;
+    flex: 0 0 30px;
+    /* Fixed width for the label */
+    /* Flat on the right where it meets the input, wide cone on the left */
+    clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 20% 100%, 0% 50%);
+    font-size: 20px;
+    /*padding-left: 30px; /* Offset text so it doesn't hit the arrow tip */
+
+}
+
+/* 3. MIDDLE PART (The Input)
+- A standard rectangle, fills the remaining space.
+*/
+.ai-input {
+    flex: 1;
+    /* Takes all available space */
+    outline: none;
+    background: #1e1e1e;
+    font-family: "audiowide", sans-serif;
+    color: var(--3rd-color);
+    /* font-weight: bold; */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    /* Rectangle cut */
+    padding-left: 10px;
+    border: 2px solid var(--1st-color);
+}
+
+.ai-input::placeholder {
+
+    /* text-transform: lowercase;
+text-align:justify; */
+    letter-spacing: 1px;
+    font-size: 12px;
+
+}
+
+/* 4. RIGHT PART (The Button)
+- Uses clip-path to create the arrow pointing RIGHT.
+*/
+.ai-save-btn {
+    cursor: pointer;
+    flex: 0 0 30px;
+    /* Fixed width */
+    /* Flat on the left where it meets the input, wide cone on the right */
+    clip-path: polygon(0% 0%, 80% 0%, 100% 50%, 80% 100%, 0% 100%);
+    /*padding-right: 30px; /* Offset text so it doesn't hit the arrow tip */
+    transition: background 0.3s ease;
+    background: var(--3rd-color);
+
+}
+
+/* Hover effect for the button */
+.ai-save-btn:hover {
+    background: #00eeff;
+    /* Sci-Fi Cyan hover */
+    color: #000;
+    transform: translateX(2px) scale(1.1);
+
+}
+
+/* --- CONTEXT MENU --- */
+#ai-ctx {
+    position: fixed;
+    display: none;
+    background: #333;
+    color: #ff5f5f;
+    padding: 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.7em;
+    font-family: "audiowide", sans-serif;
+    z-index: 300;
+}
+
+
+
+.mini-camera-container {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background: #222222;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.scale-wrapper {
+  transform: scale(0.0875); 
+  /* transform-origin: center center;
+  flex-shrink: 0; */
+}
+
+.camera-wrapper {
+  position: relative;
+  width: 340px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+}
+
+.shutter-input { display: none; }
+
+.camera-body {
+  --plastic-beige: #f4f1ea;
+  --stripe-red: #e73639;
+  --stripe-orange: #f28c31;
+  --stripe-yellow: #fcd958;
+  --stripe-green: #67b848;
+  --stripe-blue: #2c93d8;
+  position: relative;
+  width: 320px;
+  height: 340px;
+  background-color: var(--plastic-beige);
+  border-radius: 30px 30px 40px 40px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  overflow: hidden;
+}
+
+.rainbow-stripe {
+  position: absolute;
+  top: 0;
+  width: 60px;
+  height: 100%;
+  background: linear-gradient(to right, var(--stripe-red) 20%, var(--stripe-orange) 20% 40%, var(--stripe-yellow) 40% 60%, var(--stripe-green) 60% 80%, var(--stripe-blue) 80%);
+  z-index: 1;
+}
+
+.lens-housing {
+  width: 180px; height: 180px;
+  background: #111;
+  border-radius: 50%;
+  margin-top: 40px;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 0 4px #ccc;
+}
+
+.lens-glass {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #444, #000 70%);
+}
+
+.shutter-btn {
+  position: absolute;
+  bottom: 40px; right: 30px;
+  width: 60px; height: 60px;
+  background: #ff4d4d;
+  border-radius: 50%;
+  border: 4px solid #ddd;
+  z-index: 20;
+}
+
+.shutter-label { width: 100%; height: 100%; display: block; cursor: pointer; }
+
+
+/* HOVER EFFECT */
+.mini-camera-container:hover .film-slot {
+  transform: translate(-50%, 40px);
+}
+
+/* SNAP EFFECT */
+#snap:checked ~ .film-slot {
+  transform: translate(-50%, 220px) rotate(-2deg) !important;
+  z-index: 20;
+}
+
+.film-image { width: 100%; height: 100%; background: #000; }
+
+.flash-overlay {
+  position: absolute;
+  width: 100%; height: 100%;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 100;
+}
+
+#snap:checked ~ .flash-overlay {
+  animation: flash-bang 0.2s ease-out;
+}
+
+@keyframes flash-bang {
+  0% { opacity: 0.8; }
+  100% { opacity: 0; }
+}
+/* 1. INITIAL STATE: Hidden behind the camera */
+.film-slot {
+  position: absolute;
+  top: 50px; /* Moved up to be fully behind the beige body */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px; 
+  height: 280px;
+  background: #fff;
+  padding: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1; /* Behind the camera body (z-index 10) */
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none; /* Prevents film from blocking clicks while hidden */
+}
+
+/* 2. HOVER STATE: Slides out completely */
+.mini-camera-container:hover .film-slot {
+  transform: translate(-50%, 320px); /* Pushes it down past the bottom lip */
+}
+
+/* 3. CLICK/SNAP STATE: Stays down and adds the "Polaroid" tilt */
+#snap:checked ~ .film-slot {
+  transform: translate(-50%, 320px) rotate(-3deg) !important;
+  z-index: 20; /* Moves in front of the camera once snapped */
+}
+
+
+.editAppContainer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    z-index: 8;
+    display: none;
+    flex-direction: column;
+    width: fit-content;
+    transition: transform 0.5s ease;
+}
+
+.editAppContainer.editvisible {
+    display: flex;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.editGridRow {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 25px 0;
+    width: 100%;
+}
+
+.editGridRow.ltr {
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.editGridRow.rtl {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+}
+
+.editRowConnector {
+    position: absolute;
+    width: 50px;
+    height: 94px;
+    border: 2px solid #1aff00;
+    /* z-index: ; */
+    opacity: 0.4;
+}
+
+.editGridRow.ltr .editRowConnector {
+    right: -35px;
+    top: 50%;
+    border-left: none;
+    border-radius: 0 40px 40px 0;
+}
+
+.editGridRow.rtl .editRowConnector {
+    left: -35px;
+    top: 50%;
+    border-right: none;
+    border-radius: 40px 0 0 40px;
+}
+
+.editGridRow:last-child .editRowConnector {
+    display: none !important;
+}
+
+.editAppNode {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.editLineConnector {
+    width: 30px;
+    height: 2px;
+    background: #1aff00;
+    opacity: 0.8;
+    margin-top: 6px;
+    /* Slight optical adjustment if needed, or remove if flex is perfect */
+}
+
+.editBracketWrapper {
+    display: flex;
+    align-items: center;
+    /* font-size: 2.5rem;  <-- Removed as brackets are gone */
+    /* color: rgb(210, 255, 7); <-- Removed */
+    z-index: 2;
+}
+
+.editAppContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    width: 25px;
+      --plastic-beige: #f4f1ea;
+  --stripe-red: #e73639;
+  --stripe-orange: ;
+  --stripe-yellow: #fcd958;
+  --stripe-green: #67b848;
+  --stripe-blue: #2c93d8;
+}
+
+.editAppIcon {
+    width: 30px;
+    height: 30px;
+    background: #1a072f;
+    border: 2px dashed #e73639;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+    overflow: hidden;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+    transform: rotate(45deg);
+
+}
+
+.editAppIcon:hover {
+    border-color: #ff2125;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 238, 0, 0.3);
+}
+
+.editAppIcon img {
+    /* Set a reasonable size relative to the container */
+    width: 75%;
+    height: 75%;
+    object-fit: contain;
+    /* Ensures the image fits without distortion */
+    display: block;
+    transform: rotate(-45deg);
+    /* Removes inline spacing quirks */
+
+}
+
+.editAppIcon:hover  img {
+    transform: rotate(0deg);
+}
+.editAddBtn {
+    width: 35px;
+    height: 35px;
+    border: 2px dashed #ff00c8;
+    border-radius: 10px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: 'audiowide', sans-serif; 
+    font-size: 1.7em; 
+    transition: 0.3s ease-in-out;
+    margin-top: 5px;
+    background-color:#1a072f;
+}
+     .editAddBtn:hover { 
+    border-color: #ff5f5f; color: #ff5f5f; transform: translateX(3px);
+    box-shadow: 0 5px 15px rgba(255, 95, 95, 0.3); 
+}
+
+#editappremove {
+    position: fixed;
+    display: none;
+    background: #333;
+    color: #ff5f5f;
+    padding: 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.7em;
+    font-family: "audiowide", sans-serif;
+    z-index: 300;
+}
+/* 
+.editMenuItem {
+    padding: 8px 20px;
+    cursor: pointer;
+    font-size: 11px;
+    color: #1aff00;
+    text-transform: uppercase;
+} */
+
+/* .editMenuItem:hover {
+    background: #1aff00;
+    color: black;
+} */
+
+
+
+
+.editModalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.editModal {
+    background: #0a0a0a;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid var(--1st-color);
+    width: auto;
+    text-align: center;
+    display: inline-flex;
+    gap: 10px;
+    width: auto;
+    /* height: 40px; */
+}
+
+.editModal input {
+    width: 100%;
+    height: 35px;
+    background: #111;
+    border: 1px solid #333;
+    color: white;
+    box-sizing: border-box;
+    outline: none;
+    padding-left: 10px; border-color: var(--2nd-color);
+    font-family: "audiowide", sans-serif;
+    border-radius: 10px;
+}
+
+.editModal input:focus {
+    border-color: var(--3rd-color);
+    
+}
+
+.editModal button {
+    width: auto;
+    /* padding: 12px; */
+    background: var(--3rd-color);
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.editModal button:hover {
+    transform: scale(1.1);
+    background: #1aff00;
+}
+
+
+
+    /* --- DEV BUTTON STYLES --- */
+    .dev-button {
+      --color-one: red;
+      --color-two: blue;
+      --color-three: yellow;
+      --color-fore: cyan;
+      --color-five: white;
+      --time-animation: 1s;
+      --size: 32px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      width: var(--size);
+      height: var(--size);
+      cursor: pointer;
+      transition: filter 0.3s ease, transform 0.3s ease;
+      flex-shrink: 0; /* Prevents button from squishing */
+      background-color: #000;
+    }
+
+    /* THE HOVER GLOW */
+    .dev-button:hover {
+      filter: drop-shadow(0 0 8px var(--color-fore)) 
+              drop-shadow(0 0 15px var(--color-two));
+      transform: scale(1.1);
+    }
+
+    .dev-button .sphere {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      border-radius: 50%;
+      width: var(--size);
+      height: var(--size);
+      background: radial-gradient(
+         circle at 80% 20%,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(255, 255, 255, 0.8) 20%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0) 70%
+      );
+      overflow: hidden; /* Keeps the internal waves inside the circle */
+    }
+
+    .dev-button .sphere::before {
+      content: "";
+      position: absolute;
+      width: var(--size);
+      height: var(--size);
+      border-radius: 50%;
+      box-shadow:
+        inset calc(var(--size) / -20) calc(var(--size) / -20) calc(var(--size) / 10)
+          var(--color-fore),
+        inset calc(var(--size) / 10) 0 calc(var(--size) / 5) var(--color-three);
+      animation:
+        rotation calc(var(--time-animation) * 2) linear infinite,
+        colorize calc(var(--time-animation) * 2) ease-in-out infinite;
+    }
+
+    .dev-button .sphere::after {
+      content: "";
+      position: absolute;
+      width: var(--size);
+      height: var(--size);
+      border-radius: 50%;
+      z-index: -1;
+      background: radial-gradient(
+          circle at 80% 20%,
+          rgba(255, 255, 255, 0.7) 0%,
+          rgba(255, 255, 255, 0.5) 30%,
+          rgba(255, 255, 255, 0) 70%
+        ),
+        linear-gradient(120deg, var(--color-one) 20%, var(--color-two) 80%);
+      animation:
+        rotation calc(var(--time-animation) * 2) linear infinite,
+        colorblur calc(var(--time-animation) * 2) ease-in-out infinite;
+    }
+
+    .dev-button svg {
+      position: absolute;
+      width: var(--size);
+      height: var(--size);
+      pointer-events: none;
+      animation: rotation calc(var(--time-animation) * 3)
+        cubic-bezier(0.7, 0.6, 0.3, 0.4) infinite;
+    }
+
+    .dev-button svg #shapes circle { fill: var(--color-five); }
+
+    .dev-button svg #blurriness g,
+    .dev-button svg #clipping ellipse,
+    .dev-button svg #shapes g:nth-of-type(2),
+    .dev-button svg #fade ellipse {
+      filter: blur(2px); 
+    }
+
+    .dev-button svg #waves g path {
+      will-change: d;
+      stroke-width: 10px;
+    }
+
+    .dev-button svg #waves g path:nth-of-type(1) { animation: wave-one var(--time-animation) infinite; }
+    .dev-button svg #waves g path:nth-of-type(2) { animation: wave-two var(--time-animation) calc(var(--time-animation) / -2) infinite reverse; }
+    .dev-button svg #waves g path:nth-of-type(3) { animation: wave-one var(--time-animation) calc(var(--time-animation) / -2) infinite; }
+    .dev-button svg #waves g path:nth-of-type(4) { animation: wave-two var(--time-animation) infinite reverse; }
+
+    @keyframes wave-one {
+      0%, 100% { d: path("M5,50 C10,50 15,50 20,50 C25,50 30,50 95,50"); }
+      50% { d: path("M5,50 C25,50 30,20 50,20 C70,20 75,50 95,50"); }
+    }
+
+    @keyframes wave-two {
+      0%, 100% { d: path("M5,50 C10,50 15,50 20,50 C25,50 30,50 95,50"); }
+      50% { d: path("M5,50 C25,50 30,80 50,80 C70,80 75,50 95,50"); }
+    }
+
+    @keyframes rotation {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes colorize {
+      0%, 100% { filter: hue-rotate(0deg); }
+      50% { filter: hue-rotate(-90deg); }
+    }
+
+    @keyframes colorblur {
+      0%, 100% { filter: hue-rotate(0deg) blur(2.3px); }
+      50% { filter: hue-rotate(-90deg) blur(2.3px); }
+    }
+
+
+ #dev-app-wrapper {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            display: none;
+            z-index: 100;
+        }
+
+        #dev-canvas {
+            position: absolute;
+            width: 5000px; height: 5000px;
+            /* background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 40px 40px; */
+            will-change: transform;
+        }
+
+        .dev-app-node {
+            position: absolute; width: 40px;
+            display: flex; flex-direction: column; align-items: center;
+            cursor: pointer; z-index: 2; user-select: none;
+        }
+
+        .dev-icon-box {
+            width: 40px; height: 35px;
+            background: #241a2c; border: 2px solid #ff3075;
+            border-radius: 20px; display: flex; align-items: center;
+            justify-content: center; overflow: visible;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            transition: border-color 0.2s, transform 0.2s;
+            transform: skewX(-15deg);
+            position: relative;
+        }
+        /* 2. Create the hidden tooltip using the data-tooltip attribute */
+.dev-icon-box::after {
+    content: attr(data-tooltip);
+    position: fixed;
+    background: #28282a;
+    /* Your preferred translucent background */
+    color: var(--2nd-color);
+    /* Your preferred color variable */
+    padding: 4px 10px;
+    border-radius: 10px;
+    /* Your preferred rounded corners */
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 99999;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    font-family: "Audiowide", sans-serif;
+
+    /* Smooth transition that mimics the first style's hover effect */
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    transform: translate(-50%, -80%);
+    /* Initial state slightly lower */
+    backdrop-filter: blur(4px);
+}
+
+/* 3. Show the tooltip on hover */
+/* .dev-icon-box:hover::after {
+    opacity: 1;
+    transform:  translateY(-40px) skewX(15deg);
+} */
+        .dev-app-node:hover .dev-icon-box { border-color: #3b82f6; transform: translateY(-2px); transform: skewX(-15deg);}
+        .dev-icon-box img { width: 80%; height: 80%; object-fit: contain; pointer-events: none;transform: skewX(15deg); }
+
+       
+        .dev-connector { position: absolute; background-color:rgb(255, 31, 61); z-index: 1; pointer-events: none; }
+        .dev-line-h { height: 2px; }
+        .dev-line-v { width: 2px; }
+
+        #dev-context-menu {
+                position: fixed;
+        display: none;
+        background: #333;
+        color: #ff5f5f;
+        padding: 6px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.7em;
+        font-family: "audiowide", sans-serif;
+        z-index: 300;
+        }
+        /* .dev-menu-item {
+            padding: 12px 20px; font-size: 13px; cursor: pointer;
+            color: var(--dev-danger); transition: background 0.2s;
+        }
+        .dev-menu-item:hover { background: #333; } */
+
+        #dev-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .dev-modal { background: #0a0a0a; padding: 10px; 
+            /* border-radius: 10px; */
+            transform: skewX(-5deg);
+         border: 2px solid var(--1st-color);
+          width: 300px; text-align: center;
+          display: inline-flex; flex-direction: row; gap: 10px;
+           
+        }
+        /* .dev-modal h3 { margin: 0 0 15px 0; font-size: 15px; color: #fff; text-align: center; } */
+        .dev-modal input { 
+            width: 100%;
+             padding: 12px;
+              background: #121212; 
+              border: 2px solid var(--3rd-color); 
+            /* border-radius: 10px; */
+             color: white;
+              /* margin-bottom: 20px; */
+               outline: none; 
+                box-sizing:  border-box;
+                font-family: "audiowide", sans-serif;
+        }
+        
+        .dev-btn-confirm { 
+            width: fit-content;  
+            /* border-radius: 10px; */
+             cursor: pointer; border: none; 
+            background: var(--3rd-color); color: black; height:auto; 
+        }
+        .dev-btn-confirm:hover { background:#3b82f6; transform: translateX(2px); color: #000; }
+        
+        
+.elec-button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Allow the glow to be visible outside the button bounds if needed */
+  overflow: visible; 
+}
+.elec-button:hover {
+  /* Optional: Add a subtle glow on hover */
+  filter: drop-shadow(0 0 3px rgb(34, 255, 119)) drop-shadow(0 0 6px rgb(34, 255, 119));
+  transform: scale(1.1);
+}
+.elec {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.elec .dash path {
+  stroke: rgb(34, 255, 119);
+  /* Thicker line */
+  stroke-width: 2.5px; 
+  stroke-linecap: round;
+  /* Strong Neon Glow Effect */
+  filter: drop-shadow(0 0 1.5px rgb(34, 255, 119)) drop-shadow(0 0 4px rgb(34, 255, 119));
+  
+  animation: 
+    dashArray var(--sped, 2s) ease-in-out infinite,
+    dashOffset var(--sped, 2s) linear infinite;
+}
+
+/* Specific adjustment for the small detail path */
+.elec .dash path.aaa {
+  stroke-width: 3px;
+}
+
+@keyframes dashArray {
+  0%   { stroke-dasharray: 0 1 359 0; }
+  50%  { stroke-dasharray: 0 359 1 0; }
+  100% { stroke-dasharray: 359 1 0 0; }
+}
+
+@keyframes dashOffset {
+  0%   { stroke-dashoffset: -5; }
+  100% { stroke-dashoffset: -365; }
+}
+
+ /* #hud-trigger {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #000;
+            border: 2px solid rgb(34, 255, 119);
+            color: rgb(34, 255, 119);
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 200;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+            transition: all 0.3s ease;
+            font-size: 24px;
+        } */
+
+        /* #hud-trigger:hover {
+            transform: scale(1.1);
+            background: rgb(34, 255, 119);
+            color: #000;
+        } */
+
+       #elecHudWrapper {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 10; opacity: 0; pointer-events: none;
+            transition: opacity 0.5s ease;
+            /* background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px), 
+                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px; */
+             position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    /* z-index: 10; */
+    /* opacity: 0; */
+    /* visibility: hidden; */
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+        }
+        #elecHudWrapper.elecActive { opacity: 1; pointer-events: all;  }
+
+        #elecContainer { position: relative; width: 100%; height: 100%; }
+        
+        #elecConnections { 
+            position: absolute; top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            pointer-events: none; z-index: 1; 
+        }
+
+        .elecConnectionLine { 
+            fill: none; stroke: rgb(34, 255, 119); stroke-width: 1.5px; 
+            stroke-dasharray: 10 8; 
+            animation: elecDataFlow 15s linear infinite; 
+            filter: drop-shadow(0 0 3px rgba(0, 255, 255, 0.8)); 
+            opacity: 0.6; 
+        }
+        
+        @keyframes elecDataFlow { from { stroke-dashoffset: 500; } to { stroke-dashoffset: 0; } }
+
+       #elecAddBtn {
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    width: 35px; 
+    height: 35px; 
+    background: #000;
+    color: rgb(34, 255, 119); 
+    font-size: 2rem;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    cursor: pointer; 
+    z-index: 10; 
+    transition: 0.3s;
+
+    /* The "Beveled" Shape Logic */
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+    
+    /* Since clip-path cuts off standard borders, use a filter for the glow */
+    filter: drop-shadow(0 0 10px rgba(34, 255, 119, 0.6));
+    
+    /* To simulate a border, we can use an inset box-shadow */
+    box-shadow: inset 0 0 0 2px rgb(34, 255, 119);
+    
+}
+        #elecAddBtn:hover { background: rgb(34, 255, 119); color: #000; }
+.elecAppNode {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 30px; /* Slightly larger than the icon for the border thickness */
+    height: 30px;
+    background: rgb(34,255,119); /* Your Green Border Color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 5;
+    transition: transform 0.3s;
+    
+    /* The outer shape */
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+}
+
+.elecb {
+    width: 26px; /* Smaller than parent to let green show through */
+    height: 26px;
+    background: #2d2323; /* The light grey inner background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* The inner shape (must match the outer one) */
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+}
+
+.elecNodeIconImg {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+/* Hover effect on the whole container */
+.elecAppNode:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    filter: drop-shadow(0 0 8px rgba(0, 155, 72, 0.5));
+}
+        #elecRemoveMenu {
+            position: fixed;
+    display: none;
+    background: #333;
+    color: #ff5f5f;
+    padding: 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.7em;
+    font-family: "audiowide", sans-serif;
+    z-index: 300;
+        }
+
+        #elecModalOverlay {
+            position: fixed; inset: 0;
+            background: rgba(0, 0, 0, 0.9); display: none; 
+            justify-content: center; align-items: center; z-index: 300;
+            backdrop-filter: blur(15px);
+        }
+
+        .elecInputContainer { position: relative; width: 300px; }
+        .elecHoloInput {
+            width: 100%; height: 50px; background: rgba(0, 255, 255, 0.05);
+            border: none; border-bottom: 2px solid var(--3rd-color); outline: none;
+            padding: 0 10px; color: var(--3rd-color); font-family: inherit;
+            font-size: 1.1rem;
+        }
+        .elecInputLabel {
+            position: absolute; top: 15px; left: 10px; color: var(--3rd-color); font-family: "audiowide", sans-serif; font-size: 1rem;
+            opacity: 0.5; pointer-events: none; transition: 0.3s;
+        }
+        .elecHoloInput:focus + .elecInputLabel,
+        .elecHoloInput:not(:placeholder-shown) + .elecInputLabel {
+            top: -20px; font-size: 0.8rem; opacity: 1;
+            font-family: "audiowide", sans-serif; ;
+        }
+        
+        .elecCorner { position: absolute; width: 10px; height: 10px; border: 2px solid var(--1st-color); }
+        .elecCornerTl { top: -10px; left: -10px; border-right: none; border-bottom: none; }
+        .elecCornerTr { top: -10px; right: -10px; border-left: none; border-bottom: none; }
+        .elecCornerBl { bottom: -10px; left: -10px; border-right: none; border-top: none; }
+        .elecCornerBr { bottom: -10px; right: -10px; border-left: none; border-top: none; }
+
+        #elecAddConfirmBtn{
+            color: rgb(34, 255, 119); background: transparent;
+            padding: 10px 20px; font-size: 2.5rem; cursor: pointer; transition: 0.3s;
+            
+        }
+       
+
+
+
+
+
+
+
+
+
+
+
+  .bottom-nav {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 9999;
+        }
+
+        .bottom-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(48, 0, 46, 0.558);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Unique button colors/glows */
+        #btn-social { border: 2px solid var(--3rd-color); }
+        #btn-shop { border: 2px solid var(--3rd-color); }
+        #btn-games { border: 2px solid var(--3rd-color); }
+
+        .bottom-btn:hover { transform:  scale(1.1); }
+        .hidden { display: none !important; }
+
+        .tray {
+            display: none;
+            background: var(--bg-glass);
+            padding: 12px 25px;
+            border-radius: 50px;
+            box-shadow: var(--shadow);
+            align-items: center;
+            gap: 25px;
+            backdrop-filter: blur(15px);
+            animation: slideUp 0.4s ease-out;
+        }
+
+        .tray.active { display: flex; }
+
+        .tray a { text-decoration: none; font-size: 30px; transition: transform 0.2s; }
+        .tray a:hover { transform: scale(1.3); }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }

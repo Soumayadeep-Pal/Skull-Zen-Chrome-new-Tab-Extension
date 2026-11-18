@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>New Tab</title>
+		<link rel="stylesheet" href="/css/style.css" />
+		<link rel="shortcut icon" href="/img/128.png" type="image/x-icon" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
+		<link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+		<script src="/js/jquery-3.7.1.min.js"></script>
+	</head>
+	<body>
+		  <div class="overlay" id="overlay"></div>
+		<div id="popupContainer"></div>
+		<div id="remote-popup">
+			<div id="remote-popup-content">
+			</div>
+  		 </div>
+		 <div id="appBar">
+			<button class="launcher-btn" id="launcher-btn" data-tooltip="Google Apps">G</button>
+			<button class="ai-launcher-btn" id="ai-launcher" data-tooltip="Ai Apps"> Ai</button>
+			<button class="search-lab" onclick="window.open('https://labs.google.com/', '_self')"  data-tooltip="Google Labs" ><img src="https://res.cloudinary.com/dptzkxc0y/image/upload/v1756930156/flask_ebakmh.png" alt=""></button>
+		 </div>
+
+
+		<div id="searchBar"> 
+			
+			<!-- <img src="img/g.gif" height="75px" alt="search gif" class="search-icon" /> -->
+			<input type="text" id="searchInput" placeholder="Search on web" />
+			<span id="searchTrigger" class="material-symbols-outlined"> search </span>
+		</div>
+
+</div>
+
+
+		  
+
+  <div class="circle-menu" id="circleMenu">
+    <div class="ring ring1"></div>
+    <div class="ring ring2"></div>
+    <div class="ring ring3"></div>
+
+    <!-- Rotating apps wrapper -->
+    <div class="circle-apps" id="circleApps"></div>
+
+    <!-- Fixed center app -->
+    <div class="center-app">
+      <a href="https://myaccount.google.com/?utm_source=OGB&utm_medium=app" >
+        <img src="https://lh3.googleusercontent.com/a/ACg8ocK4KpSs4OHziAzkqxCx4Mwcwo865awInLMJV7U4jeFvXI4NePA=s192-c" alt="Google Account">
+        <span>Account</span>
+      </a>
+    </div>
+  </div>
+
+
+<div class="ai-circle-menu" id="ai-circleMenu">
+    <div class="ai-circle-apps" id="ai-circleApps"></div>
+    <div id="aiAddBtn"></div>
+  </div>
+
+  <!-- Add Shortcut Modal -->
+  <div class="ai-modal" id="ai-addModal">
+    <div class="ai-card">
+      <h3>Add a New Shortcut</h3>
+      <label for="ai-appName">Shortcut Name</label>
+      <input id="ai-appName" type="text" placeholder="Enter name"/>
+      <label for="ai-appUrl">Website URL</label>
+      <input id="ai-appUrl" type="text" placeholder="https://example.com"/>
+      <div class="ai-row">
+        <button class="ai-btn ai-secondary" id="ai-cancelAdd">Cancel</button>
+        <button class="ai-btn ai-primary" id="ai-confirmAdd">Add</button>
+      </div>
+    </div>
+  </div>
+
+
+        <div id="shortcutContainer"></div>
+
+		
+		<div id="clock">
+			<div id="time"></div>
+			<div id="today"></div>
+			<div id="city-country">Detecting...</div>
+			<div id="weather-widget" style="font-size:18px; font-family:Arial; margin-top:20px;">Loading weather...</div> 
+      <div class="network">
+  <div class="gauge-row">
+    <!-- Gauge -->
+    <div class="gauge-container">
+      <div class="gauge">
+        <div class="gauge-bg"></div>
+        <div class="gauge-needle" id="download-needle"></div>
+        <div class="gauge-needle" id="upload-needle"></div>
+        <div class="gauge-center"></div>
+        <div class="gauge-scale" id="gauge-scale"></div>
+      </div>
+    </div>
+
+    <!-- Values on Right -->
+    <div class="speed-value-group">
+      <div>
+        <div class="speed-value" id="download-value" style="color: var(--download-fill);">
+          0.00 <span class="speed-unit">Mbps</span>
+        </div>
+        <div class="gauge-label">⬇️ Download</div>
+      </div>
+      <div>
+        <div class="speed-value" id="upload-value" style="color: var(--upload-fill);">
+          0.00 <span class="speed-unit">Mbps</span>
+        </div>
+        <div class="gauge-label">⬆️ Upload</div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="bar-container">
+      <div id="barFill" class="bar-fill"></div>
+      <div id="barLabel" class="bar-label">—</div>
+    </div>
+  <!-- gpu info   -->
+
+   <div class="gpu_info">
+     <div class="gpu_name">
+    <canvas id="glCanvas" width="15px" height="15px"></canvas>
+  <div class="info" id="gpu">GPU: Detecting...</div>
+  </div>
+  <div class="frame">
+    <div class="info" id="fps">FPS: 0</div>
+  <div class="info" id="frametime">Frame Time: 0 ms</div>
+  </div>
+   </div>
+<!-- battery -->
+  <div class="battery-wrapper">
+    <div class="batterytype">Battery: </div>
+    <div class="battery-container">
+      <div class="battery-level" id="batteryLevel"></div>
+      <div class="battery-text" id="batteryText">Loading...</div>
+    </div>
+    <div class="battery-tip" id="batterytip"></div>
+  </div>
+  <div class="warning" id="warningText">⚠️ Low Battery! Please charge</div>
+
+
+		</div>
+    
+        <div id="links">
+			
+			<a href="javascript:void(0)" id="newNoteButton" title="New Sticky Note">📝 New Note</a>
+
+			<a href="#" id="uninstall-link" title="Uninstall">
+               🗑️ Uninstall 
+            </a>
+
+        	<p style="display: flex; gap :10px;">
+				💡Made by <a href="#" id="espal" style="color: rgb(225, 0, 255); font-size: calc(20px *var(--scale)); font-weight:600;"> Espal</a>
+			</p>
+            
+			<p>
+				 © 2025 — All Rights Reserved
+			</p>
+            
+            
+        </div>
+
+        <div id="addShortcut" class="none">
+            <input type="text" id="addName"  placeholder="Website Name" >
+            <input type="text" id="addUrl" placeholder="Website Url">
+            <button id="appendShortcut">Add</button>
+        </div>
+
+
+		<div id="typing-container"></div>
+		
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+        <script src="js/config.js"></script>
+        <script src="js/script.js"></script>
+        <script src="js/popup.js"></script>
+        <script src="js/bg.js"></script>
+
+	</body>
+
+</html>

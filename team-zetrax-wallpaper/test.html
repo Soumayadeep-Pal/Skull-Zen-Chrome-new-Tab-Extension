@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Tab - Icon Trays</title>
+    <style>
+        :root {
+            --bg-glass: rgba(255, 255, 255, 0.98);
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f0f2f5;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 999999;
+        }
+
+        /* The Main Cycling Emoji Buttons */
+        .main-btn {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            border: none;
+            background: white;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-size: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .main-btn:hover { transform: translateY(-8px) scale(1.05); }
+
+        #btn-social { border-bottom: 4px solid #00acee; }
+        #btn-shop { border-bottom: 4px solid #ff9900; }
+        #btn-games { border-bottom: 4px solid #9146ff; }
+
+        .hidden { display: none !important; }
+
+        /* The Tray */
+        .tray {
+            display: none;
+            background: var(--bg-glass);
+            padding: 12px 25px;
+            border-radius: 60px;
+            box-shadow: var(--shadow);
+            align-items: center;
+            gap: 20px;
+            backdrop-filter: blur(10px);
+            animation: slideUp 0.4s ease-out forwards;
+        }
+
+        .tray.active { display: flex; }
+
+        /* Icon Styling inside Tray */
+        .tray a {
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .tray img {
+            width: 35px; /* Size of the social icons */
+            height: 35px;
+            object-fit: contain;
+            border-radius: 8px; /* Slight rounding for square icons */
+        }
+
+        .tray a:hover { transform: scale(1.2); }
+
+        .back-btn {
+            background: #eee;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            color: #666;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bottom-nav" id="navContainer">
+        <button id="btn-social" class="main-btn">📱</button>
+        <button id="btn-shop" class="main-btn">🛒</button>
+        <button id="btn-games" class="main-btn">🎮</button>
+
+        <div id="socialTray" class="tray">
+            <button class="back-btn close-trigger">✕</button>
+            <a href="https://twitter.com" target="_blank">
+                <img src="https://www.google.com/s2/favicons?sz=64&domain=twitter.com" alt="Twitter">
+            </a>
+            <a href="https://instagram.com" target="_blank">
+                <img src="https://www.google.com/s2/favicons?sz=64&domain=instagram.com" alt="Instagram">
+            </a>
+            <a href="https://facebook.com" target="_blank">
+                <img src="https://www.google.com/s2/favicons?sz=64&domain=facebook.com" alt="Facebook">
+            </a>
+        </div>
+
+        <div id="shopTray" class="tray">
+            <button class="back-btn close-trigger">✕</button>
+            <a href="https://amazon.com" target="_blank">
+                <img src="https://www.google.com/s2/favicons?sz=64&domain=amazon.com" alt="Amazon">
+            </a>
+            <a href="https://ebay.com" target="_blank">
+                <img src="https://www.google.com/s2/favicons?sz=64&domain=ebay.com" alt="eBay">
+            </a>
+        </div>
+
+        <div id="gamesTray" class="tray">
+            <button class="back-btn close-trigger">✕</button>
+            <a href="https://steampowered.com" target="_blank">
+                <img src="https://www.google.com/s2/favicons?sz=64&domain=steampowered.com" alt="Steam">
+            </a>
+            <a href="https://twitch.tv" target="_blank">
+                <img src="https://www.google.com/s2/favicons?sz=64&domain=twitch.tv" alt="Twitch">
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sets = {
+                social: ['📱', '💬', '👥', '🤳'],
+                shop:   ['🛒', '🛍️', '📦', '💳'],
+                games:  ['🎮', '🕹️', '👾', '🏆']
+            };
+
+            let index = 0;
+            const btnSocial = document.getElementById('btn-social');
+            const btnShop = document.getElementById('btn-shop');
+            const btnGames = document.getElementById('btn-games');
+
+            // Cycling Emojis on the main buttons
+            setInterval(() => {
+                index = (index + 1) % sets.social.length;
+                btnSocial.textContent = sets.social[index];
+                btnShop.textContent = sets.shop[index];
+                btnGames.textContent = sets.games[index];
+            }, 800);
+
+            function openTray(category) {
+                document.querySelectorAll('.main-btn').forEach(btn => btn.classList.add('hidden'));
+                document.getElementById(category + 'Tray').classList.add('active');
+            }
+
+            function closeTrays() {
+                document.querySelectorAll('.tray').forEach(tray => tray.classList.remove('active'));
+                document.querySelectorAll('.main-btn').forEach(btn => btn.classList.remove('hidden'));
+            }
+
+            btnSocial.addEventListener('click', () => openTray('social'));
+            btnShop.addEventListener('click', () => openTray('shop'));
+            btnGames.addEventListener('click', () => openTray('games'));
+
+            document.querySelectorAll('.close-trigger').forEach(btn => {
+                btn.addEventListener('click', closeTrays);
+            });
+        });
+    </script>
+</body>
+</html>

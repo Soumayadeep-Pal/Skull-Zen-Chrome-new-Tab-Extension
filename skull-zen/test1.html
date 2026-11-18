@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Battery Monitor</title>
+  <style>
+    body {
+      background: #0f1724;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .battery-wrapper {
+      display: flex;
+      align-items: center;
+    }
+    .batterytype{
+      margin-right: 10px;
+      font-size: 15px;
+    }
+
+    .battery-container {
+      width: 100px;
+      height: 25px;
+      border: 3px solid #00ffcc;
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+      background: #1e293b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .battery-level {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00ff0d, #e8e807);
+      transition: width 0.3s ease, background 0.3s ease;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 0;
+     
+    }
+
+    .battery-text {
+      position: relative;
+      font-size: 12px;
+      color: #676363;
+      z-index: 1;
+    }
+
+    .battery-tip {
+      width: 10px;
+      height: 10px;
+      background: #00ffcc;
+      margin-left: 2px;
+      border-radius: 2px;
+    }
+    
+    .warning {
+      margin-top: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #ff4d4d;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="battery-wrapper">
+    <div class="batterytype">Battery: </div>
+    <div class="battery-container">
+      <div class="battery-level" id="batteryLevel"></div>
+      <div class="battery-text" id="batteryText">Loading...</div>
+    </div>
+    <div class="battery-tip" id="batterytip"></div>
+  </div>
+  <div class="warning" id="warningText">⚠️ Low Battery! Please charge</div>
+
+  <script>
+    navigator.getBattery().then(function(battery) {
+      function updateBatteryInfo() {
+        let level = Math.floor(battery.level * 100);
+        let batteryLevel = document.getElementById("batteryLevel");
+        let batteryText = document.getElementById("batteryText");
+        let warningText = document.getElementById("warningText");
+        let batterytip = document.getElementById("batterytip");
+
+        // Update width
+        batteryLevel.style.width = level + "%";
+        batteryText.textContent =  level + "% " + (battery.charging ? "⚡" : "");
+
+        // Check low battery condition
+        if (level <= 20 && !battery.charging) {
+          batteryLevel.style.background = "red";
+          warningText.style.display = "block";
+          batterytip.style.background="red";
+        }
+        else {
+          batteryLevel.style.background = "linear-gradient(90deg, #00ff0d, #ffee00)";
+          warningText.style.display = "none";
+          
+        }
+      }
+
+      updateBatteryInfo();
+
+      // Update when battery changes
+      battery.addEventListener("levelchange", updateBatteryInfo);
+      battery.addEventListener("chargingchange", updateBatteryInfo);
+    });
+  </script>
+</body>
+</html>
